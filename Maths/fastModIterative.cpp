@@ -23,17 +23,28 @@ a^n ------->(n = even) ----> (a^(n/2))^2
 
 #include<iostream>
 
-const int MOD = 1e9 + 7;
+const int MOD = 1e9 + 7; //for overflow
 
 int fastMod(int a,long long n)
 {
   int prod = 1;
   if(n == 0) return 1;
-  if((n % 2))
+  while(n)
   {
-    return (1LL *a* fastMod(a,n-1))%MOD;
+
+    if(n & 1)
+    {
+      prod = (1LL*prod * a) % MOD;
+      n = n - 1;
+    }
+    else
+    {
+      a = (1LL*a * a) % MOD;
+      n = n /2;
+    }
+
   }
-  return (fastMod((1LL*a*a)%MOD,n/2));
+  return prod;
 }
 int main()
 {
